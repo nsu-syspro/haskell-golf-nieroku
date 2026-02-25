@@ -10,9 +10,15 @@ module Task1 where
 -- [(1,'a'),(1,'b'),(1,'c')]
 -- >>> encode []
 -- []
---
-encode :: Eq a => [a] -> [(Int, a)]
-encode = error "TODO: define encode"
+encode :: (Eq a) => [a] -> [(Int, a)]
+encode [] = []
+encode (f : r) = g 1 f r
+  where
+    g n c [] = [(n, c)]
+    g n c (h : t) =
+      if h == c
+        then g (n + 1) c t
+        else (n, c) : (g 1 h t)
 
 -- | Decompresses given data using run-length decoding.
 --
@@ -24,9 +30,8 @@ encode = error "TODO: define encode"
 -- "abc"
 -- >>> decode []
 -- []
---
 decode :: [(Int, a)] -> [a]
-decode = error "TODO: define decode"
+decode = concat . map (\(n, c) -> take n $ repeat c)
 
 -- | Rotates given finite list to the left for a given amount N
 --
@@ -44,6 +49,7 @@ decode = error "TODO: define decode"
 -- "cab"
 -- >>> rotate 5 ""
 -- ""
---
 rotate :: Int -> [a] -> [a]
-rotate = error "TODO: define rotate"
+rotate m l = take n $ drop (m `mod` n) $ cycle l
+  where
+    n = length l
