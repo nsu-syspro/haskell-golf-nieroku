@@ -31,7 +31,7 @@ encode (f : r) = g 1 f r
 -- >>> decode []
 -- []
 decode :: [(Int, a)] -> [a]
-decode = concat . map (\(n, c) -> take n $ repeat c)
+decode = (>>= uncurry replicate)
 
 -- | Rotates given finite list to the left for a given amount N
 --
