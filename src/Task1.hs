@@ -18,7 +18,7 @@ encode (f : r) = g 1 f r
     g n c (h : t) =
       if h == c
         then g (n + 1) c t
-        else (n, c) : (g 1 h t)
+        else (n, c) : g 1 h t
 
 -- | Decompresses given data using run-length decoding.
 --
